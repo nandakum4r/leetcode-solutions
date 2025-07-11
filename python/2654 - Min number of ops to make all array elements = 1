@@ -1,0 +1,21 @@
+import math
+class Solution:
+    def minOperations(self, nums: List[int]) -> int:
+        count = 0 
+        n = len(nums)
+        k = 0
+        for i in range(n):
+            if nums[i] == 1:
+                k = k+1
+        if k > 0:
+            return n - k
+            
+        val = float("inf")
+        for i in range(n):
+            cgcd = nums[i]
+            for j in range(i+1, n):
+                cgcd = math.gcd(cgcd , nums[j])
+                if cgcd == 1:
+                    val = min(val , j-i)
+                    break
+        return -1 if val == float("inf") else val + n - 1
