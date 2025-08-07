@@ -1,0 +1,36 @@
+class Solution {
+public:
+    int findCircleNum(vector<vector<int>>& isConnected) {
+        int connected = 0;
+        vector<bool> visited (isConnected.size() , false);
+    
+        for(int i = 0; i < isConnected.size(); ++i){
+            for(int j = 0; j < isConnected.size(); ++j){
+                if(isConnected[i][j] && !visited[i]){
+                    this->bfs(isConnected, i, visited);
+                    connected++;
+                }
+            }
+        }
+        return connected;
+    }
+
+    void bfs(vector<vector<int>>& graph, int node, vector<bool>& visited){
+        queue<int> q;
+        q.push(node);
+
+        visited[node] = true;
+
+        while(!q.empty()){
+            node = q.front();
+            q.pop();
+
+            for(int i = 0 ; i < graph.size(); ++i){
+                if(graph[node][i] && !visited[i]){
+                    q.push(i);
+                    visited[i] = true;
+                }
+            }
+        }
+    }
+};
