@@ -1,0 +1,32 @@
+class Solution {
+public:
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
+        
+        queue<pair<int,int>> q;
+        int orgColor = image[sr][sc];
+        image[sr][sc] = color;
+        q.push({sr,sc});
+
+        while(!q.empty()){
+            auto [r,c] = q.front();q.pop();
+            cout << r << c << endl;
+            fill(image, r, c, color, q, orgColor); 
+        }
+        return image;
+    }
+
+    void fill(vector<vector<int>>& image, int r , int c, int color, queue<pair<int,int>> &q, int orgColor){
+        vector<pair<int,int>> dirs = {{0,1}, {1,0}, {-1,0} , {0,-1}};
+
+        for(auto [dr,dc] : dirs){
+            int nr = r + dr;
+            int nc = c + dc;
+
+            if (nr < 0 || nc < 0 || nr >= image.size() || nc >= image[0].size() || image[nr][nc] != orgColor || image[nr][nc] == color)
+                continue;
+
+            image[nr][nc] = color;
+            q.push({nr,nc});
+        }
+    }
+};
